@@ -1,0 +1,31 @@
+{
+  "name": "embed-bot",
+  "version": "1.0.0",
+  "description": "A bot to create embeds for you using Discord's new slash commands!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Controlfreak707/Embed-Bot.git"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "discord-bot",
+    "discord-js"
+  ],
+  "author": "Controlfreak707",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Controlfreak707/Embed-Bot/issues"
+  },
+  "homepage": "https://github.com/Controlfreak707/Embed-Bot#readme",
+  "dependencies": {
+    "dblapi.js": "^2.4.1",
+    "discord.js": "^12.5.1",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1"
+  }
+}
