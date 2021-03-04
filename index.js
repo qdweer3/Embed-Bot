@@ -18,7 +18,7 @@ const dbl = new DBL(process.env.DBL_TOKEN, client);
 const emitError = (error) => client.emit("error", error);
 
 client.on("error", async (error) => {
-  (await client.channels.fetch("795763002523385906")).send(
+  (await client.channels.fetch(process.env.ERROR_CHANNEL)).send(
     `\`\`\`js\n${error}\`\`\``
   );
   console.error(error);
@@ -42,25 +42,26 @@ client.once("ready", () => {
 });
 
 client.on("message", (message) => {
-  const Embed = new Discord.MessageEmbed()
-    .setTitle("Commands")
-    .setDescription(
-      "`/embed` - Allows you to create an embed!\n`/invite` - Invite Embed Bot to your own server!\n`/vote` - Vote for Embed Bot on top.gg!\n`/support` - Get an invite to the support server."
-    )
-    .setFooter(
-      "Made with discord.js and ❤️ by Liam The Protogen#2501",
-      "https://avatars0.githubusercontent.com/u/26492485"
-    )
-    .setColor(Discord.Constants.Colors.BLURPLE);
   if (
-    message.content == "<@790256560898048011>" ||
-    message.content == "<@!790256560898048011>"
-  )
+    message.content == `<@${client.user.id}>` ||
+    message.content == `<@!${client.user.id}>`
+  ) {
+    const Embed = new Discord.MessageEmbed()
+      .setTitle("Commands")
+      .setDescription(
+        "`/embed` - Allows you to create an embed!\n`/invite` - Invite Embed Bot to your own server!\n`/vote` - Vote for Embed Bot on top.gg!\n`/support` - Get an invite to the support server."
+      )
+      .setFooter(
+        "Made with discord.js and ❤️ by Liam The Protogen#2501",
+        "https://avatars0.githubusercontent.com/u/26492485"
+      )
+      .setColor(Discord.Constants.Colors.BLURPLE);
     message.channel.send(Embed);
+  }
 });
 
 const registerCommand = (data) => {
-  client.api.applications("790256560898048011").commands.post({ data });
+  client.api.applications(client.user.id).commands.post({ data });
 };
 
 registerCommand({
@@ -142,7 +143,7 @@ client.ws.on("INTERACTION_CREATE", async (interaction) => {
     }
   });
 
-  (await client.channels.fetch("795763084089622538")).send(
+  (await client.channels.fetch(process.env.LOG_CHANNEL)).send(
     `${(await client.users.fetch(interaction.member.user.id)).tag} (${
       interaction.member.user.id
     }) triggered the "${interaction.data.name}" (${
@@ -319,14 +320,14 @@ client.ws.on("INTERACTION_CREATE", async (interaction) => {
         break;
     }
 
-    (await client.channels.fetch("795763084089622538")).send(
+    (await client.channels.fetch(process.env.LOG_CHANNEL)).send(
       `"${interaction.data.name}" (${interaction.data.id}) command ran succesfully.`
     );
   } catch (error) {
     emitError(error);
 
-    (await client.channels.fetch("795763084089622538")).send(
-      `"${interaction.data.name}" (${interaction.data.id}) command ran unsuccesfully. Check <#795763002523385906> for more info.`
+    (await client.channels.fetch(process.env.LOG_CHANNEL)).send(
+      `"${interaction.data.name}" (${interaction.data.id}) command ran unsuccesfully. Check <#${process.env.ERROR_CHANNEL}> for more info.`
     );
 
     interact({
