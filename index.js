@@ -57,7 +57,7 @@ client.on("message", (message) => {
 
 const registerCommand = (data) => {
 	client.api
-		.applications(process.env.CLIENT_ID || client.user.id)
+		.applications(process.env.CLIENT_ID)
 		.commands.post({ data });
 };
 
