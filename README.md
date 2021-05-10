@@ -1,3 +1,5 @@
+> Embed Bot has been deprecated! Its predecessor can be found here: https://github.com/v-briese/botler
+
 # Embed-Bot
 A bot to create embeds for you using Discord's new slash commands
 
